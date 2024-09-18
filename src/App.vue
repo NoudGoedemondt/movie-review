@@ -1,43 +1,26 @@
 <template>
-  <v-layout class="rounded rounded-md">
-    <v-system-bar color="grey-darken-3"></v-system-bar>
-
-    <v-navigation-drawer
-      color="grey-darken-2"
-      width="72"
-      permanent
-    ></v-navigation-drawer>
-
-    <v-navigation-drawer
-      color="grey-darken-1"
-      width="150"
-      permanent
-    ></v-navigation-drawer>
-
-    <v-app-bar color="grey" height="48" flat></v-app-bar>
-
-    <v-navigation-drawer
-      color="grey-lighten-1"
-      location="right"
-      width="150"
-      permanent
-    ></v-navigation-drawer>
-
-    <v-app-bar
-      color="grey-lighten-2"
-      height="48"
-      location="bottom"
-      flat
-    ></v-app-bar>
-
-    <v-main
-      class="d-flex align-center justify-center"
-      style="min-height: 300px"
-    >
-      Main Content
-    </v-main>
-  </v-layout>
+  <div class="app">
+    <img :src="imgUrl" />
+    <pre>
+      {{ data }}
+    </pre>
+  </div>
 </template>
+
+<script setup>
+import { onMounted, computed, ref } from 'vue';
+import { fetchTrendingMovies, constructImageUrl } from './api/tmdb';
+
+const data = ref(null);
+
+const imgUrl = computed(() =>
+  constructImageUrl('w300', '/Asg2UUwipAdE87MxtJy7SQo08XI.jpg')
+);
+
+onMounted(async () => {
+  data.value = await fetchTrendingMovies('day');
+});
+</script>
 
 <style>
 * {
