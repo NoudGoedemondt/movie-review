@@ -9,7 +9,7 @@
 
 <script setup>
 import { onMounted, computed, ref } from 'vue';
-import { fetchTrendingMovies, constructImageUrl } from './api/tmdb';
+import { fetchTrending, constructImageUrl } from './api/tmdb';
 
 const data = ref(null);
 
@@ -18,7 +18,7 @@ const imgUrl = computed(() =>
 );
 
 onMounted(async () => {
-  data.value = await fetchTrendingMovies('day');
+  data.value = await fetchTrending('all', 'day', 1);
 });
 </script>
 
