@@ -1,24 +1,29 @@
 <template>
   <div class="app">
-    <img :src="imgUrl" />
+    <movie-card
+      v-for="movie in movieData"
+      :key="movie.id"
+      :name="movie.name"
+      :overview="movie.overview"
+      :imgUrl="movie.poster_path"
+    />
     <pre>
-      {{ data }}
+      {{ movieData }}
     </pre>
   </div>
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from 'vue';
-import { fetchTrending, constructImageUrl } from './api/tmdb';
+import { onMounted, ref } from 'vue';
+import { fetchTrending } from './api/tmdb';
 
-const data = ref(null);
+import MovieCard from './components/MovieCard.vue';
 
-const imgUrl = computed(() =>
-  constructImageUrl('w300', '/Asg2UUwipAdE87MxtJy7SQo08XI.jpg')
-);
+const movieData = ref(null);
 
 onMounted(async () => {
-  data.value = await fetchTrending('all', 'day', 1);
+  const { results } = await fetchTrending('all', 'day', 1);
+  movieData.value = results;
 });
 </script>
 

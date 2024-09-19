@@ -28,6 +28,12 @@ export const fetchTrending = async (type, timeWindow, page = 1) => {
   }
 };
 
+/**
+ * Constructs an image url from TMDb
+ * @param {string} size  - backdrop_sizes: "w300", "w780", "w1280", "original". poster_sizes: "w92", "w154", "w185", "w342", "w500", "w780", "original"
+ * @param {string} file_path - file path e.g. /1tfCj5h0FEQ5xg8hzVjQgcuGlgN.jpg
+ * @returns
+ */
 export const constructImageUrl = (size, file_path) => {
   return IMAGES_URL + size + '/' + file_path;
 };
