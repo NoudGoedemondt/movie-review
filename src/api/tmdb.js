@@ -14,6 +14,7 @@ const IMAGES_URL = 'http://image.tmdb.org/t/p/';
  **/
 export const fetchTrending = async (type, timeWindow, page = 1) => {
   const url = `${BASE_URL}/trending/${type}/${timeWindow}?api_key=${API_KEY}&page=${page}`;
+  console.log(url);
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -30,7 +31,7 @@ export const fetchTrending = async (type, timeWindow, page = 1) => {
 
 /**
  * Constructs an image url from TMDb
- * @param {string} size  - backdrop_sizes: "w300", "w780", "w1280", "original". poster_sizes: "w92", "w154", "w185", "w342", "w500", "w780", "original"
+ * @param {string} size  - backdrop_sizes: "w300", "w780", "w1280", "original". poster_sizes: "w92", "w154", "w185", "w342", "w500", "w780", "original". profile_sizes: "w45", "w185", "h632", "original"
  * @param {string} file_path - file path e.g. /1tfCj5h0FEQ5xg8hzVjQgcuGlgN.jpg
  * @returns
  */

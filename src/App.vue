@@ -1,30 +1,15 @@
 <template>
   <div class="app">
-    <movie-card
-      v-for="movie in movieData"
-      :key="movie.id"
-      :name="movie.name"
-      :overview="movie.overview"
-      :imgUrl="movie.poster_path"
-    />
-    <pre>
-      {{ movieData }}
-    </pre>
+    <trending-movies />
+    <trending-tv />
+    <trending-people />
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { fetchTrending } from './api/tmdb';
-
-import MovieCard from './components/MovieCard.vue';
-
-const movieData = ref(null);
-
-onMounted(async () => {
-  const { results } = await fetchTrending('all', 'day', 1);
-  movieData.value = results;
-});
+import TrendingMovies from './components/TrendingMovies.vue';
+import TrendingTv from './components/TrendingTv.vue';
+import TrendingPeople from './components/TrendingPeople.vue';
 </script>
 
 <style>
@@ -37,5 +22,11 @@ body {
   padding: 0;
   font-family: 'Roboto' sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+.card-container {
+  display: flex;
+  gap: 10px;
+  overflow: scroll;
 }
 </style>

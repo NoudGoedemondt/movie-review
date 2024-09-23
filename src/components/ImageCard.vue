@@ -1,14 +1,16 @@
 <template>
-  <img :src="url" :alt="props.name" />
+  <div>
+    <img :src="url" :alt="url" />
+  </div>
 </template>
 
 <script setup>
 import { defineProps, computed } from 'vue';
 import { constructImageUrl } from '../api/tmdb';
 
-const props = defineProps(['name', 'overview', 'imgUrl']);
+const props = defineProps(['size', 'imgUrl']);
 
-const url = computed(() => constructImageUrl('w154', props.imgUrl));
+const url = computed(() => constructImageUrl(props.size, props.imgUrl));
 </script>
 
 <style scoped>
