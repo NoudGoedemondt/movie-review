@@ -8,9 +8,22 @@
 import { defineProps, computed } from 'vue';
 import { constructImageUrl } from '../api/tmdb';
 
-const props = defineProps(['size', 'imgUrl']);
+import defaultAvatar from '@/assets/avatar-default.png';
+import defaultImage from '@/assets/image-default.png';
 
-const url = computed(() => constructImageUrl(props.size, props.imgUrl));
+const props = defineProps(['size', 'imgUrl', 'type']);
+
+const url = computed(() => {
+  if (props.imgUrl) {
+    return constructImageUrl(props.size, props.imgUrl);
+  }
+
+  if (props.type === 'avatar') {
+    return defaultAvatar;
+  }
+
+  return defaultImage;
+});
 </script>
 
 <style scoped>
