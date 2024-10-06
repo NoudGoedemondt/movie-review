@@ -7,10 +7,11 @@ import * as directives from 'vuetify/directives';
 
 import App from './App.vue';
 import store from './store';
+import router from './router';
 
 const vuetify = createVuetify({
   components,
   directives,
 });
 
-createApp(App).use(vuetify).use(store).mount('#app');
+createApp(App).use(vuetify).use(store).use(router).mount('#app');

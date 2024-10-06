@@ -1,16 +1,8 @@
 <template>
   <div class="app">
-    <trending-movies />
-    <trending-tv />
-    <trending-people />
+    <router-view></router-view>
   </div>
 </template>
-
-<script setup>
-import TrendingMovies from './components/TrendingMovies.vue';
-import TrendingTv from './components/TrendingTv.vue';
-import TrendingPeople from './components/TrendingPeople.vue';
-</script>
 
 <style>
 * {
