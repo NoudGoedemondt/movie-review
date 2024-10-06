@@ -18,7 +18,7 @@ const url = computed(() => {
     return constructImageUrl(props.size, props.imgUrl);
   }
 
-  if (props.type === 'avatar') {
+  if (props.type === 'person') {
     return defaultAvatar;
   }
 

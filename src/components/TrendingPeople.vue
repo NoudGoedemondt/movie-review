@@ -6,7 +6,7 @@
         :key="people.id"
         :img-url="people.profile_path"
         :size="'w185'"
-        :type="'avatar'"
+        :type="'person'"
       />
     </div>
   </div>
