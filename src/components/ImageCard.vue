@@ -1,17 +1,20 @@
 <template>
-  <div>
+  <div @click="goToDetails">
     <img :src="url" :alt="url" />
   </div>
 </template>
 
 <script setup>
 import { defineProps, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { constructImageUrl } from '../api/tmdb';
 
 import defaultAvatar from '@/assets/avatar-default.png';
 import defaultImage from '@/assets/image-default.png';
 
-const props = defineProps(['size', 'imgUrl', 'type']);
+const props = defineProps(['size', 'imgUrl', 'type', 'id']);
+
+const router = useRouter();
 
 const url = computed(() => {
   if (props.imgUrl) {
@@ -24,14 +27,8 @@ const url = computed(() => {
 
   return defaultImage;
 });
+
+const goToDetails = () => {
+  router.push(`/details/${props.type}/${props.id}`);
+};
 </script>
-
-<style scoped>
-img {
-  transition: all 0.3s ease-in-out;
-}
-
-img:hover {
-  transform: scale(1.1);
-}
-</style>

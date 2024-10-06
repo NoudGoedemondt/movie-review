@@ -1,11 +1,13 @@
 <template>
-  <div class="trending-people">
+  <div class="trending-tv">
     <div class="card-container">
       <ImageCard
         v-for="tv in filteredTvData"
         :key="tv.id"
+        :id="tv.id"
         :size="'w185'"
         :img-url="tv.poster_path"
+        :type="'tv'"
       />
     </div>
   </div>

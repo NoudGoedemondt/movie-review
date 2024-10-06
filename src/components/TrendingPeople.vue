@@ -4,6 +4,7 @@
       <ImageCard
         v-for="people in peopleData"
         :key="people.id"
+        :id="people.id"
         :img-url="people.profile_path"
         :size="'w185'"
         :type="'person'"

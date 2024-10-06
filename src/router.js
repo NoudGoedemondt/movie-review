@@ -5,7 +5,7 @@ import DetailsView from './views/DetailsView.vue';
 
 const routes = [
   { path: '/', component: HomeView },
-  { path: '/details/:id', component: DetailsView },
+  { path: '/details/:type/:id', component: DetailsView },
 ];
 
 const router = createRouter({

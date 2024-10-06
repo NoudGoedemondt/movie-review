@@ -1,11 +1,13 @@
 <template>
-  <div class="trending-people">
+  <div class="trending-movies">
     <div class="card-container">
       <ImageCard
         v-for="movie in filteredMovieData"
         :key="movie.id"
+        :id="movie.id"
         :size="'w185'"
         :img-url="movie.poster_path"
+        :type="'movie'"
       />
     </div>
   </div>
