@@ -14,7 +14,6 @@ const IMAGES_URL = 'http://image.tmdb.org/t/p/';
  **/
 export const fetchTrending = async (type, timeWindow, page = 1) => {
   const url = `${BASE_URL}/trending/${type}/${timeWindow}?api_key=${API_KEY}&page=${page}`;
-  console.log(url);
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -23,6 +22,22 @@ export const fetchTrending = async (type, timeWindow, page = 1) => {
 
     const trendingMoviesData = await response.json();
     return trendingMoviesData;
+  } catch (error) {
+    console.error(error.message);
+    return null;
+  }
+};
+
+export const fetchDetails = async (id, type) => {
+  const url = `${BASE_URL}/${type}/${id}?api_key=${API_KEY}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error(error.message);
     return null;
