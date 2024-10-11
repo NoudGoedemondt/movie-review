@@ -1,21 +1,30 @@
 <template>
-  <h1>These are the details</h1>
-  <pre>
-    {{ data }}
-  </pre>
+  <component :is="componentForType" :id="id" />
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import TvDetails from '@/components/details/TvDetails.vue';
+import MovieDetails from '@/components/details/MovieDetails.vue';
+import PersonDetails from '@/components/details/PersonDetails.vue';
 
-import { fetchDetails } from '@/api/tmdb';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const { id, type } = route.params;
+const id = computed(() => route.params.id);
+const type = computed(() => route.params.type);
 
-const data = ref(null);
-
-onMounted(async () => (data.value = await fetchDetails(id, type)));
+const componentForType = computed(() => {
+  switch (type.value) {
+    case 'tv':
+      return TvDetails;
+    case 'movie':
+      return MovieDetails;
+    case 'person':
+      return PersonDetails;
+    default:
+      return null;
+  }
+});
 </script>
