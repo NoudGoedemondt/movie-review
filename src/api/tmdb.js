@@ -30,6 +30,7 @@ export const fetchTrending = async (type, timeWindow, page = 1) => {
 
 export const fetchDetails = async (id, type) => {
   const url = `${BASE_URL}/${type}/${id}?api_key=${API_KEY}`;
+  console.log(url);
   try {
     const response = await fetch(url);
     if (!response.ok) {
