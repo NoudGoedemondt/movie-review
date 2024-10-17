@@ -10,34 +10,65 @@
       }"
     >
     </v-sheet>
-    <v-container
-      :style="{
-        transform: `translateY(-${overlayAmount})`,
-      }"
-    >
+
+    <v-container>
       <v-row>
-        <v-spacer></v-spacer>
-        <v-col cols="2">
-          <v-img :src="posterUrl" alt="Movie Poster" class="rounded-lg" />
-          <v-sheet class="mt-5 d-flex align-center justify-center">
-            <span class="mr-1">{{ rating.toFixed(1) }}</span>
-            <v-rating
-              v-model="starRating"
-              length="5"
-              color="amber"
-              density="compact"
-              half-increments
-              readonly
-            ></v-rating>
-            <span class="ml-1">({{ ratingCount }})</span>
-          </v-sheet>
+        <v-spacer />
+        <v-col cols="3">
+          <v-card
+            variant="text"
+            max-width="280"
+            :style="{
+              transform: 'translateY(-200px)',
+            }"
+          >
+            <v-img :src="posterUrl" alt="Movie Poster" />
+
+            <v-card-text>
+              <div class="d-flex justify-space-between">
+                <div class="font-weight-bold">Country:</div>
+                <div>
+                  <p v-for="(country, index) in originCountry" :key="index">
+                    {{ country }}
+                  </p>
+                </div>
+              </div>
+              <div class="mt-2 d-flex justify-space-between">
+                <div class="font-weight-bold">Released:</div>
+                <div>{{ releaseDate }}</div>
+              </div>
+            </v-card-text>
+          </v-card>
         </v-col>
-        <v-spacer></v-spacer>
-        <v-col cols="7" :style="`margin-top: ${overlayAmount}`">
-          <h1 class="font-weight-bold">{{ title }}</h1>
-          <v-chip color="primary" dark>{{ releaseDate }}</v-chip>
-          <p class="my-4">{{ overview }}</p>
+        <v-col cols="5">
+          <v-card variant="text">
+            <v-card-text>
+              <div class="text-h3 font-weight-bold">{{ title }}</div>
+              <div class="my-4 text-subtitle-1">{{ tagline }}</div>
+              <div class="d-flex align-center">
+                <span class="mr-1">{{ rating.toFixed(1) }}</span>
+                <v-rating
+                  v-model="starRating"
+                  length="5"
+                  color="amber"
+                  density="compact"
+                  half-increments
+                  readonly
+                ></v-rating>
+                <span class="ml-1">({{ ratingCount }})</span>
+              </div>
+              <div class="my-4">{{ overview }}</div>
+              <v-chip
+                v-for="genre in genres"
+                :key="genre.id"
+                color="primary"
+                class="mr-1"
+                >{{ genre.name }}</v-chip
+              >
+            </v-card-text>
+          </v-card>
         </v-col>
+        <v-spacer />
       </v-row>
     </v-container>
   </div>
@@ -47,15 +78,18 @@
 import { onMounted, ref, defineProps, computed } from 'vue';
 import { fetchDetails, constructImageUrl } from '@/api/tmdb';
 
-const overlayAmount = '150px';
-
 const props = defineProps(['id']);
 
 const data = ref(null);
 const loading = ref(true);
 
-const title = computed(() => data.value.title);
-const overview = computed(() => data.value.overview);
+const backdropUrl = computed(() =>
+  data.value ? constructImageUrl('original', data.value.backdrop_path) : ''
+);
+
+const posterUrl = computed(() =>
+  data.value ? constructImageUrl('w780', data.value.poster_path) : ''
+);
 const rating = computed(() => data.value.vote_average);
 const starRating = computed(() => data.value.vote_average / 2);
 const ratingCount = computed(() => data.value.vote_count);
@@ -65,12 +99,12 @@ const releaseDate = computed(() =>
     year: 'numeric',
   })
 );
-const posterUrl = computed(() =>
-  data.value ? constructImageUrl('w780', data.value.poster_path) : ''
-);
-const backdropUrl = computed(() =>
-  data.value ? constructImageUrl('original', data.value.backdrop_path) : ''
-);
+const originCountry = computed(() => data.value.origin_country);
+
+const title = computed(() => data.value.title);
+const tagline = computed(() => data.value.tagline);
+const overview = computed(() => data.value.overview);
+const genres = computed(() => data.value.genres);
 
 onMounted(async () => {
   try {
