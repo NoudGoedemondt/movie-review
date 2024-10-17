@@ -16,7 +16,6 @@
         <v-spacer />
         <v-col cols="3">
           <v-card
-            variant="text"
             max-width="280"
             :style="{
               transform: 'translateY(-200px)',
@@ -41,7 +40,7 @@
           </v-card>
         </v-col>
         <v-col cols="5">
-          <v-card variant="text">
+          <v-card variant="flat">
             <v-card-text>
               <div class="text-h3 font-weight-bold">{{ title }}</div>
               <div class="my-4 text-subtitle-1">{{ tagline }}</div>
