@@ -1,7 +1,9 @@
 <template>
-  <main>
-    <router-view></router-view>
-  </main>
+  <v-layout>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+  </v-layout>
 </template>
 
 <style>
