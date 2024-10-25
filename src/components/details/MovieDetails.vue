@@ -21,7 +21,7 @@
               transform: 'translateY(-200px)',
             }"
           >
-            <v-img :src="posterUrl" alt="Movie Poster" />
+            <v-img :src="posterUrl" alt="Movie Poster" class="rounded" />
 
             <v-card-text>
               <div class="d-flex justify-space-between">
@@ -81,9 +81,6 @@
         </v-col>
         <v-spacer />
       </v-row>
-      <pre>
-        {{ recommendedData }}
-      </pre>
     </v-container>
   </div>
 </template>
