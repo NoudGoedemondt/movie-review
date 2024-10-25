@@ -30,7 +30,22 @@ export const fetchTrending = async (type, timeWindow, page = 1) => {
 
 export const fetchDetails = async (id, type) => {
   const url = `${BASE_URL}/${type}/${id}?api_key=${API_KEY}`;
-  console.log(url);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error.message);
+    return null;
+  }
+};
+
+export const fetchRecommended = async (id, type, page = 1) => {
+  const url = `${BASE_URL}/${type}/${id}/recommendations?api_key=${API_KEY}&page=${page}`;
   try {
     const response = await fetch(url);
     if (!response.ok) {
