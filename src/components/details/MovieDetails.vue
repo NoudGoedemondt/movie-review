@@ -11,16 +11,15 @@
     >
     </v-sheet>
 
-    <v-container>
+    <v-container
+      :style="{
+        transform: `translateY(-${posterOverlay})`,
+      }"
+    >
       <v-row>
         <v-spacer />
         <v-col cols="2">
-          <v-card
-            max-width="280"
-            :style="{
-              transform: 'translateY(-200px)',
-            }"
-          >
+          <v-card width="280">
             <v-img :src="posterUrl" alt="Movie Poster" class="rounded" />
 
             <v-card-text>
@@ -40,26 +39,31 @@
           </v-card>
         </v-col>
         <v-col cols="6">
-          <v-card variant="flat">
-            <v-card-text>
-              <div class="text-h3 font-weight-bold">{{ title }}</div>
-              <div class="my-4 text-subtitle-1">{{ tagline }}</div>
-              <div class="d-flex align-center">
-                <span class="mr-1">{{ rating.toFixed(1) }}</span>
-                <v-rating
-                  v-model="starRating"
-                  length="5"
-                  color="amber"
-                  density="compact"
-                  half-increments
-                  readonly
-                ></v-rating>
-                <span class="ml-1">({{ ratingCount }})</span>
-              </div>
-              <div class="my-4">{{ overview }}</div>
-            </v-card-text>
-            <v-divider />
-          </v-card>
+          <v-row><div :style="{ height: `${posterOverlay}` }"></div></v-row>
+          <v-row>
+            <v-card variant="flat">
+              <v-card-text>
+                <div class="text-h3 font-weight-bold">{{ title }}</div>
+                <div class="my-4 text-subtitle-1">{{ tagline }}</div>
+                <div class="d-flex align-center">
+                  <span class="mr-1">{{ rating.toFixed(1) }}</span>
+                  <v-rating
+                    v-model="starRating"
+                    length="5"
+                    color="amber"
+                    density="compact"
+                    half-increments
+                    readonly
+                  ></v-rating>
+                  <span class="ml-1">({{ ratingCount }})</span>
+                </div>
+                <div class="my-4">
+                  {{ overview }}
+                </div>
+              </v-card-text>
+              <v-divider />
+            </v-card>
+          </v-row>
           <v-container>
             <v-chip
               v-for="genre in genres"
@@ -70,14 +74,22 @@
             >
           </v-container>
           <v-divider />
-          <image-card
-            v-for="recommended in recommendedData"
-            :key="recommended.id"
-            :id="recommended.id"
-            :size="'w154'"
-            :img-url="recommended.poster_path"
-            :type="'movie'"
-          />
+        </v-col>
+        <v-spacer />
+      </v-row>
+      <v-row>
+        <v-spacer />
+        <v-col cols="8">
+          <v-container class="d-flex overflow-x-auto">
+            <image-card
+              v-for="recommended in recommendedData"
+              :key="recommended.id"
+              :id="recommended.id"
+              :size="'w185'"
+              :img-url="recommended.poster_path"
+              :type="'movie'"
+            />
+          </v-container>
         </v-col>
         <v-spacer />
       </v-row>
@@ -89,6 +101,8 @@
 import { onMounted, ref, defineProps, computed } from 'vue';
 import { fetchDetails, fetchRecommended, constructImageUrl } from '@/api/tmdb';
 import ImageCard from '../ImageCard.vue';
+
+const posterOverlay = '200px';
 
 const props = defineProps(['id']);
 
