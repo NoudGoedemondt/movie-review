@@ -1,6 +1,10 @@
 <template>
-  <v-container v-if="loading" class="text-center">Loading...</v-container>
+  <v-container v-if="loading" class="text-center">
+    <v-progress-circular indeterminate />
+  </v-container>
+
   <div v-else>
+    <!-- backdrop -->
     <v-sheet
       :style="{
         backgroundImage: `url(${backdropUrl})`,
@@ -18,9 +22,16 @@
     >
       <v-row>
         <v-spacer />
+        <!-- poster -->
         <v-col cols="2">
-          <v-card width="280">
-            <v-img :src="posterUrl" alt="Movie Poster" class="rounded" />
+          <v-card>
+            <v-img
+              :src="posterUrl"
+              alt="Movie Poster"
+              class="rounded"
+              aspect-ratio="2/3"
+            >
+            </v-img>
 
             <v-card-text>
               <div class="d-flex justify-space-between">
@@ -38,13 +49,20 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="6">
-          <v-row><div :style="{ height: `${posterOverlay}` }"></div></v-row>
+
+        <!-- details -->
+        <v-col cols="8">
+          <v-row>
+            <div :style="{ height: `${posterOverlay}` }"></div>
+          </v-row>
           <v-row>
             <v-card variant="flat">
               <v-card-text>
                 <div class="text-h3 font-weight-bold">{{ title }}</div>
-                <div class="my-4 text-subtitle-1">{{ tagline }}</div>
+                <div v-if="tagline" class="my-4 text-subtitle-1">
+                  {{ tagline }}
+                </div>
+
                 <div class="d-flex align-center">
                   <span class="mr-1">{{ rating.toFixed(1) }}</span>
                   <v-rating
@@ -57,39 +75,47 @@
                   ></v-rating>
                   <span class="ml-1">({{ ratingCount }})</span>
                 </div>
-                <div class="my-4">
+
+                <div class="text-body-1 my-4">
                   {{ overview }}
                 </div>
               </v-card-text>
+
               <v-divider />
+
+              <v-container>
+                <v-chip
+                  v-for="genre in genres"
+                  :key="genre.id"
+                  color="primary"
+                  class="mr-2"
+                  >{{ genre.name }}</v-chip
+                >
+              </v-container>
             </v-card>
           </v-row>
-          <v-container>
-            <v-chip
-              v-for="genre in genres"
-              :key="genre.id"
-              color="primary"
-              class="mr-1"
-              >{{ genre.name }}</v-chip
-            >
-          </v-container>
-          <v-divider />
         </v-col>
         <v-spacer />
       </v-row>
+
+      <!-- recommendations -->
       <v-row>
         <v-spacer />
-        <v-col cols="8">
-          <v-container class="d-flex overflow-x-auto">
-            <image-card
-              v-for="recommended in recommendedData"
-              :key="recommended.id"
-              :id="recommended.id"
-              :size="'w185'"
-              :img-url="recommended.poster_path"
-              :type="'movie'"
-            />
-          </v-container>
+        <v-col cols="10">
+          <v-card flat>
+            <v-card-title class="text-h5 mb-4">Recommended Movies</v-card-title>
+            <v-container class="d-flex overflow-x-auto pa-0">
+              <image-card
+                v-for="movie in recommendedData"
+                :key="movie.id"
+                :id="movie.id"
+                :size="'w185'"
+                :img-url="movie.poster_path"
+                :type="'movie'"
+                class="mr-5"
+              />
+            </v-container>
+          </v-card>
         </v-col>
         <v-spacer />
       </v-row>
