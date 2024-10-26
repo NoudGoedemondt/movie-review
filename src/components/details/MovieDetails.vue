@@ -130,7 +130,12 @@ import ImageCard from '../ImageCard.vue';
 
 const posterOverlay = '200px';
 
-const props = defineProps(['id']);
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
+});
 
 const movieData = ref(null);
 const recommendedData = ref(null);
@@ -173,3 +178,23 @@ onMounted(async () => {
   }
 });
 </script>
+
+<style scoped>
+.overflow-x-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+  height: 6px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+}
+</style>
