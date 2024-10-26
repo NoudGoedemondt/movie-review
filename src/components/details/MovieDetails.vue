@@ -124,7 +124,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, defineProps, computed } from 'vue';
+import { onMounted, ref, defineProps, computed, watch } from 'vue';
 import { fetchDetails, fetchRecommended, constructImageUrl } from '@/api/tmdb';
 import ImageCard from '../ImageCard.vue';
 
@@ -166,17 +166,33 @@ const tagline = computed(() => movieData.value.tagline);
 const overview = computed(() => movieData.value.overview);
 const genres = computed(() => movieData.value.genres);
 
-onMounted(async () => {
+const fetchMovieData = async (id) => {
+  loading.value = true;
   try {
-    movieData.value = await fetchDetails(props.id, 'movie');
-    const { results } = await fetchRecommended(props.id, 'movie');
-    recommendedData.value = results;
+    const [details, recommendations] = await Promise.all([
+      fetchDetails(id, 'movie'),
+      fetchRecommended(id, 'movie'),
+    ]);
+    movieData.value = details;
+    recommendedData.value = recommendations.results;
   } catch (error) {
-    console.error('Error fething details', error);
+    console.error('Error fetching details:', error);
   } finally {
     loading.value = false;
   }
-});
+};
+
+watch(
+  () => props.id,
+  (newId) => {
+    if (newId) {
+      fetchMovieData(newId);
+    }
+  },
+  { immediate: true }
+);
+
+onMounted(() => fetchMovieData(props.id));
 </script>
 
 <style scoped>
