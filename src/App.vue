@@ -2,7 +2,7 @@
   <v-app>
     <!-- app bar -->
     <v-navigation-drawer fixed v-model="drawer" app>
-      <v-list dense>
+      <v-list>
         <v-list-tile @click="goToHome">
           <v-list-tile-action> <v-icon>home</v-icon> </v-list-tile-action>
           <v-list-tile-content>

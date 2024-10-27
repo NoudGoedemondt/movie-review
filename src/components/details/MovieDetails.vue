@@ -24,7 +24,7 @@
     <!-- main content -->
     <v-container
       class="position-relative"
-      style="margin-top: 400px; z-index: 1"
+      style="margin-top: 300px; z-index: 1"
     >
       <v-sheet rounded class="py-10">
         <v-row>
@@ -65,7 +65,7 @@
           </v-col>
 
           <!-- details -->
-          <v-col cols="8">
+          <v-col cols="6">
             <v-row>
               <v-card variant="flat">
                 <v-card-text>
