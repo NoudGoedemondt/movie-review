@@ -6,119 +6,133 @@
   <div v-else>
     <!-- backdrop -->
     <v-sheet
+      class="backdrop"
       :style="{
         backgroundImage: `url(${backdropUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: '400px',
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        height: '100vh',
+        'z-index': '0',
       }"
     >
     </v-sheet>
 
+    <!-- main content -->
     <v-container
-      :style="{
-        transform: `translateY(-${posterOverlay})`,
-      }"
+      class="position-relative"
+      style="margin-top: 400px; z-index: 1"
     >
-      <v-row>
-        <v-spacer />
-        <!-- poster -->
-        <v-col cols="2">
-          <v-card>
-            <v-img
-              :src="posterUrl"
-              alt="Movie Poster"
-              class="rounded"
-              aspect-ratio="2/3"
+      <v-sheet rounded class="py-10">
+        <v-row>
+          <v-spacer />
+          <!-- poster -->
+          <v-col cols="2">
+            <v-card
+              style="
+                position: absolute;
+                z-index: 10;
+                transform: translateY(-200px);
+              "
             >
-            </v-img>
+              <v-img
+                :src="posterUrl"
+                alt="Movie Poster"
+                class="rounded"
+                aspect-ratio="2/3"
+                width="260"
+              >
+              </v-img>
 
-            <v-card-text>
-              <div class="d-flex justify-space-between">
-                <div class="font-weight-bold">Country:</div>
-                <div>
-                  <p v-for="(country, index) in originCountry" :key="index">
-                    {{ country }}
-                  </p>
-                </div>
-              </div>
-              <div class="mt-2 d-flex justify-space-between">
-                <div class="font-weight-bold">Released:</div>
-                <div>{{ releaseDate }}</div>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-col>
-
-        <!-- details -->
-        <v-col cols="8">
-          <v-row>
-            <div :style="{ height: `${posterOverlay}` }"></div>
-          </v-row>
-          <v-row>
-            <v-card variant="flat">
               <v-card-text>
-                <div class="text-h3 font-weight-bold">{{ title }}</div>
-                <div v-if="tagline" class="my-4 text-subtitle-1">
-                  {{ tagline }}
+                <div class="d-flex justify-space-between">
+                  <div class="font-weight-bold">Country:</div>
+                  <div>
+                    <p v-for="(country, index) in originCountry" :key="index">
+                      {{ country }}
+                    </p>
+                  </div>
                 </div>
-
-                <div class="d-flex align-center">
-                  <span class="mr-1">{{ rating.toFixed(1) }}</span>
-                  <v-rating
-                    v-model="starRating"
-                    length="5"
-                    color="amber"
-                    density="compact"
-                    half-increments
-                    readonly
-                  ></v-rating>
-                  <span class="ml-1">({{ ratingCount }})</span>
-                </div>
-
-                <div class="text-body-1 my-4">
-                  {{ overview }}
+                <div class="mt-2 d-flex justify-space-between">
+                  <div class="font-weight-bold">Released:</div>
+                  <div>{{ releaseDate }}</div>
                 </div>
               </v-card-text>
+            </v-card>
+          </v-col>
 
-              <v-divider />
+          <!-- details -->
+          <v-col cols="8">
+            <v-row>
+              <v-card variant="flat">
+                <v-card-text>
+                  <div class="text-h3 font-weight-bold">{{ title }}</div>
+                  <div v-if="tagline" class="my-4 text-subtitle-1">
+                    {{ tagline }}
+                  </div>
 
-              <v-container>
-                <v-chip
-                  v-for="genre in genres"
-                  :key="genre.id"
-                  color="primary"
-                  class="mr-2"
-                  >{{ genre.name }}</v-chip
-                >
+                  <div class="d-flex align-center">
+                    <span class="mr-1">{{ rating.toFixed(1) }}</span>
+                    <v-rating
+                      v-model="starRating"
+                      length="5"
+                      color="amber"
+                      density="compact"
+                      half-increments
+                      readonly
+                    ></v-rating>
+                    <span class="ml-1">({{ ratingCount }})</span>
+                  </div>
+
+                  <div class="text-body-1 my-4">
+                    {{ overview }}
+                  </div>
+                </v-card-text>
+
+                <v-divider />
+
+                <v-container>
+                  <v-chip
+                    v-for="genre in genres"
+                    :key="genre.id"
+                    color="primary"
+                    class="mr-2"
+                    >{{ genre.name }}</v-chip
+                  >
+                </v-container>
+              </v-card>
+            </v-row>
+          </v-col>
+          <v-spacer />
+        </v-row>
+
+        <!-- recommendations -->
+        <v-row>
+          <v-spacer />
+          <v-col cols="10">
+            <v-card flat>
+              <v-card-title class="text-h5 mb-4"
+                >Recommended Movies</v-card-title
+              >
+              <v-container class="d-flex overflow-x-auto pa-0">
+                <image-card
+                  v-for="movie in recommendedData"
+                  :key="movie.id"
+                  :id="movie.id"
+                  :size="'w185'"
+                  :img-url="movie.poster_path"
+                  :type="'movie'"
+                  class="mr-5"
+                />
               </v-container>
             </v-card>
-          </v-row>
-        </v-col>
-        <v-spacer />
-      </v-row>
-
-      <!-- recommendations -->
-      <v-row>
-        <v-spacer />
-        <v-col cols="10">
-          <v-card flat>
-            <v-card-title class="text-h5 mb-4">Recommended Movies</v-card-title>
-            <v-container class="d-flex overflow-x-auto pa-0">
-              <image-card
-                v-for="movie in recommendedData"
-                :key="movie.id"
-                :id="movie.id"
-                :size="'w185'"
-                :img-url="movie.poster_path"
-                :type="'movie'"
-                class="mr-5"
-              />
-            </v-container>
-          </v-card>
-        </v-col>
-        <v-spacer />
-      </v-row>
+          </v-col>
+          <v-spacer />
+        </v-row>
+      </v-sheet>
     </v-container>
   </div>
 </template>
@@ -127,8 +141,6 @@
 import { onMounted, ref, defineProps, computed, watch } from 'vue';
 import { fetchDetails, fetchRecommended, constructImageUrl } from '@/api/tmdb';
 import ImageCard from '../ImageCard.vue';
-
-const posterOverlay = '200px';
 
 const props = defineProps({
   id: {
