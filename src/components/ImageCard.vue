@@ -14,7 +14,7 @@ import defaultImage from '@/assets/image-default.png';
 
 const props = defineProps(['size', 'imgUrl', 'type', 'id']);
 
-const route = useRouter();
+const router = useRouter();
 
 const url = computed(() => {
   if (props.imgUrl) {
@@ -29,6 +29,6 @@ const url = computed(() => {
 });
 
 const goToDetails = () => {
-  route.push(`/details/${props.type}/${props.id}`);
+  router.push(`/details/${props.type}/${props.id}`);
 };
 </script>
