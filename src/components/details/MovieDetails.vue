@@ -1,5 +1,8 @@
 <template>
-  <v-container v-if="loading" class="text-center">
+  <v-container
+    v-if="loading"
+    class="text-center fill-height d-flex align-center justify-center"
+  >
     <v-progress-circular indeterminate />
   </v-container>
 
@@ -39,7 +42,6 @@
                 position: absolute;
                 z-index: 10;
                 transform: translateY(-200px);
-                width: 260px;
               "
             />
           </v-col>
@@ -67,7 +69,7 @@
                     <span class="ml-1">({{ ratingCount }})</span>
                   </div>
 
-                  <div class="text-body-1 my-4">
+                  <div class="text-body-1 my-4" style="min-height: 100px">
                     {{ overview }}
                   </div>
                 </v-card-text>
@@ -189,6 +191,22 @@ onMounted(() => fetchMovieData(props.id));
 </script>
 
 <style scoped>
+.backdrop {
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .overflow-x-auto {
   scrollbar-width: thin;
   scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
