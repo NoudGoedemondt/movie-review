@@ -51,7 +51,7 @@ const props = defineProps({
     required: true,
   },
   releaseDate: {
-    type: Date,
+    type: String,
     required: false,
     default: null,
   },

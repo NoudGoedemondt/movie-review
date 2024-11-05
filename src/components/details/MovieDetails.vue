@@ -51,7 +51,7 @@
             <v-row>
               <v-card variant="flat">
                 <v-card-text>
-                  <div class="text-h3 font-weight-bold">{{ title }}</div>
+                  <div class="mb-4 text-h3 font-weight-bold">{{ title }}</div>
                   <div v-if="tagline" class="my-4 text-subtitle-1">
                     {{ tagline }}
                   </div>
@@ -69,7 +69,7 @@
                     <span class="ml-1">({{ ratingCount }})</span>
                   </div>
 
-                  <div class="text-body-1 my-4" style="min-height: 100px">
+                  <div class="text-body-1 my-4">
                     {{ overview }}
                   </div>
                 </v-card-text>
@@ -85,6 +85,7 @@
                     >{{ genre.name }}</v-chip
                   >
                 </v-container>
+                <v-divider />
               </v-card>
             </v-row>
           </v-col>
@@ -94,23 +95,8 @@
         <!-- recommendations -->
         <v-row>
           <v-spacer />
-          <v-col cols="10">
-            <v-card flat>
-              <v-card-title class="text-h5 mb-4"
-                >Recommended Movies</v-card-title
-              >
-              <v-container class="d-flex overflow-x-auto pa-0">
-                <image-card
-                  v-for="movie in recommendedData"
-                  :key="movie.id"
-                  :id="movie.id"
-                  :size="'w185'"
-                  :img-url="movie.poster_path"
-                  :type="'movie'"
-                  class="mr-5"
-                />
-              </v-container>
-            </v-card>
+          <v-col cols="8">
+            <details-recommended :id="props.id" />
           </v-col>
           <v-spacer />
         </v-row>
@@ -121,19 +107,18 @@
 
 <script setup>
 import { onMounted, ref, defineProps, computed, watch } from 'vue';
-import { fetchDetails, fetchRecommended, constructImageUrl } from '@/api/tmdb';
-import ImageCard from '../ImageCard.vue';
+import { fetchDetails, constructImageUrl } from '@/api/tmdb';
 import DetailsPoster from './DetailsPoster.vue';
+import DetailsRecommended from './DetailsRecommended.vue';
 
 const props = defineProps({
   id: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
 
 const movieData = ref(null);
-const recommendedData = ref(null);
 const loading = ref(true);
 
 const backdropUrl = computed(() =>
@@ -164,12 +149,8 @@ const genres = computed(() => movieData.value.genres);
 const fetchMovieData = async (id) => {
   loading.value = true;
   try {
-    const [details, recommendations] = await Promise.all([
-      fetchDetails(id, 'movie'),
-      fetchRecommended(id, 'movie'),
-    ]);
+    const details = await fetchDetails(id, 'movie');
     movieData.value = details;
-    recommendedData.value = recommendations.results;
   } catch (error) {
     console.error('Error fetching details:', error);
   } finally {
@@ -195,24 +176,6 @@ onMounted(() => fetchMovieData(props.id));
   animation: fadeIn ease 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
-}
-
-.overflow-x-auto {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-}
-
-.overflow-x-auto::-webkit-scrollbar {
-  height: 6px;
-}
-
-.overflow-x-auto::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.overflow-x-auto::-webkit-scrollbar-thumb {
-  background-color: rgba(155, 155, 155, 0.5);
-  border-radius: 20px;
 }
 
 @keyframes fadeIn {
