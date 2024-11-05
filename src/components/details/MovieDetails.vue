@@ -31,37 +31,17 @@
           <v-spacer />
           <!-- poster -->
           <v-col cols="2">
-            <v-card
+            <details-poster
+              :poster-url="posterUrl"
+              :origin-country="originCountry"
+              :release-date="releaseDate"
               style="
                 position: absolute;
                 z-index: 10;
                 transform: translateY(-200px);
+                width: 260px;
               "
-            >
-              <v-img
-                :src="posterUrl"
-                alt="Movie Poster"
-                class="rounded"
-                aspect-ratio="2/3"
-                width="260"
-              >
-              </v-img>
-
-              <v-card-text>
-                <div class="d-flex justify-space-between">
-                  <div class="font-weight-bold">Country:</div>
-                  <div>
-                    <p v-for="(country, index) in originCountry" :key="index">
-                      {{ country }}
-                    </p>
-                  </div>
-                </div>
-                <div class="mt-2 d-flex justify-space-between">
-                  <div class="font-weight-bold">Released:</div>
-                  <div>{{ releaseDate }}</div>
-                </div>
-              </v-card-text>
-            </v-card>
+            />
           </v-col>
 
           <!-- details -->
@@ -141,6 +121,7 @@
 import { onMounted, ref, defineProps, computed, watch } from 'vue';
 import { fetchDetails, fetchRecommended, constructImageUrl } from '@/api/tmdb';
 import ImageCard from '../ImageCard.vue';
+import DetailsPoster from './DetailsPoster.vue';
 
 const props = defineProps({
   id: {
