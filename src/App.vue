@@ -1,19 +1,18 @@
 <template>
   <v-app>
     <!-- app bar -->
-    <v-navigation-drawer fixed v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" app>
       <v-list>
-        <v-list-tile @click="goToHome">
-          <v-list-tile-action> <v-icon>home</v-icon> </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+        <v-list-item @click="goToHome">
+          <template v-slot:prepend>
+            <v-icon icon="mdi-home"></v-icon>
+          </template>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar color="indigo">
+    <v-app-bar collapse>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-app-bar-title>Application</v-app-bar-title>
     </v-app-bar>
 
     <!-- main content -->
@@ -31,7 +30,10 @@ const router = useRouter();
 
 const drawer = ref(false);
 
-const goToHome = () => router.push('/');
+const goToHome = () => {
+  router.push('/');
+  drawer.value = false;
+};
 </script>
 
 <style>
