@@ -192,19 +192,9 @@ onMounted(() => fetchMovieData(props.id));
 
 <style scoped>
 .backdrop {
-  animation: fadeInAnimation ease 2s;
+  animation: fadeIn ease 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
-}
-
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }
 
 .overflow-x-auto {
@@ -223,5 +213,15 @@ onMounted(() => fetchMovieData(props.id));
 .overflow-x-auto::-webkit-scrollbar-thumb {
   background-color: rgba(155, 155, 155, 0.5);
   border-radius: 20px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 </style>
