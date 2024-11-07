@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat v-if="hasRecommended">
     <v-card-title class="text-h5 mb-4">Recommended Movies</v-card-title>
     <v-container class="d-flex overflow-x-auto pa-0">
       <image-card
@@ -17,7 +17,7 @@
 
 <script setup>
 import { fetchRecommended } from '@/api/tmdb';
-import { onMounted, ref, defineProps } from 'vue';
+import { onMounted, ref, defineProps, computed } from 'vue';
 import ImageCard from '../ImageCard.vue';
 
 const props = defineProps({
@@ -28,6 +28,8 @@ const props = defineProps({
 });
 
 const recommendedData = ref([]);
+
+const hasRecommended = computed(() => recommendedData.value.length > 0);
 
 onMounted(async () => {
   const recommendations = await fetchRecommended(props.id, 'movie');
