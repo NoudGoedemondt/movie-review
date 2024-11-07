@@ -92,6 +92,15 @@
           <v-spacer />
         </v-row>
 
+        <!-- video -->
+        <v-row>
+          <v-spacer />
+          <v-col cols="7">
+            <details-video :id="props.id" />
+          </v-col>
+          <v-spacer />
+        </v-row>
+
         <!-- recommendations -->
         <v-row>
           <v-spacer />
@@ -110,6 +119,7 @@ import { onMounted, ref, defineProps, computed, watch } from 'vue';
 import { fetchDetails, constructImageUrl } from '@/api/tmdb';
 import DetailsPoster from './DetailsPoster.vue';
 import DetailsRecommended from './DetailsRecommended.vue';
+import DetailsVideo from './DetailsVideo.vue';
 
 const props = defineProps({
   id: {
