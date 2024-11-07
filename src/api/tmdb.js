@@ -60,6 +60,22 @@ export const fetchRecommended = async (id, type, page = 1) => {
   }
 };
 
+export const fetchVideos = async (id, type) => {
+  const url = `${BASE_URL}/${type}/${id}/videos?api_key=${API_KEY}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error.message);
+    return null;
+  }
+};
+
 /**
  * Constructs an image url from TMDb
  * @param {string} size  - backdrop_sizes: "w300", "w780", "w1280", "original". poster_sizes: "w92", "w154", "w185", "w342", "w500", "w780", "original". profile_sizes: "w45", "w185", "h632", "original"
