@@ -1,7 +1,7 @@
 <template>
   <v-container
     v-if="loading"
-    class="text-center fill-height d-flex align-center justify-center"
+    class="fill-height d-flex align-center justify-center"
   >
     <v-progress-circular indeterminate />
   </v-container>
