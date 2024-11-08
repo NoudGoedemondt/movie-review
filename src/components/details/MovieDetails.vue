@@ -33,22 +33,26 @@
       <v-sheet class="rounded pa-0 ma-0">
         <v-row>
           <v-spacer />
+
           <!-- poster -->
-          <v-col cols="12" md="2">
-            <details-poster
-              :poster-url="posterUrl"
-              :origin-country="originCountry"
-              :release-date="releaseDate"
-              style="
-                position: absolute;
-                z-index: 10;
-                transform: translateY(-200px);
-              "
-            />
+          <v-col cols="3">
+            <div class="position-relative">
+              <details-poster
+                :poster-url="posterUrl"
+                :origin-country="originCountry"
+                :release-date="releaseDate"
+                style="
+                  position: absolute;
+                  z-index: 2;
+                  transform: translateY(-200px);
+                  width: 100%;
+                "
+              />
+            </div>
           </v-col>
 
           <!-- details -->
-          <v-col cols="12" md="6">
+          <v-col cols="6">
             <v-row>
               <v-card variant="flat">
                 <v-card-text>
@@ -70,23 +74,24 @@
                     <span class="ml-1">({{ ratingCount }})</span>
                   </div>
 
-                  <div class="text-body-1 my-4">
+                  <div class="text-body-1 my-4" style="min-height: 100px">
                     {{ overview }}
                   </div>
                 </v-card-text>
 
-                <v-divider />
-
-                <v-container>
-                  <v-chip
-                    v-for="genre in genres"
-                    :key="genre.id"
-                    color="primary"
-                    class="mr-2"
-                    >{{ genre.name }}</v-chip
-                  >
-                </v-container>
-                <v-divider />
+                <v-card-text>
+                  <v-divider />
+                  <v-container>
+                    <v-chip
+                      v-for="genre in genres"
+                      :key="genre.id"
+                      color="primary"
+                      class="mr-2"
+                      >{{ genre.name }}</v-chip
+                    >
+                  </v-container>
+                  <v-divider />
+                </v-card-text>
               </v-card>
             </v-row>
           </v-col>
@@ -96,7 +101,7 @@
         <!-- video -->
         <v-row>
           <v-spacer />
-          <v-col cols="7">
+          <v-col cols="9">
             <details-video :id="props.id" />
           </v-col>
           <v-spacer />
@@ -105,7 +110,7 @@
         <!-- recommendations -->
         <v-row>
           <v-spacer />
-          <v-col cols="8">
+          <v-col cols="9">
             <details-recommended :id="props.id" />
           </v-col>
           <v-spacer />

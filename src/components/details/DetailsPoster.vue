@@ -1,11 +1,6 @@
 <template>
   <v-card>
-    <v-img
-      :src="props.posterUrl"
-      alt="Movie Poster"
-      class="rounded"
-      aspect-ratio="2/3"
-    >
+    <v-img :src="props.posterUrl" alt="Movie Poster" class="rounded">
       <template v-slot:placeholder>
         <v-row class="fill-height" align="center" justify="center">
           <v-progress-circular indeterminate></v-progress-circular>
