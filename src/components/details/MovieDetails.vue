@@ -26,14 +26,15 @@
 
     <!-- main content -->
     <v-container
-      class="position-relative"
+      class="position-relative mx-auto pa-0"
       style="margin-top: 300px; z-index: 1"
+      max-width="1240"
     >
-      <v-sheet rounded class="py-10">
+      <v-sheet class="rounded pa-0 ma-0">
         <v-row>
           <v-spacer />
           <!-- poster -->
-          <v-col cols="2">
+          <v-col cols="12" md="2">
             <details-poster
               :poster-url="posterUrl"
               :origin-country="originCountry"
@@ -47,7 +48,7 @@
           </v-col>
 
           <!-- details -->
-          <v-col cols="6">
+          <v-col cols="12" md="6">
             <v-row>
               <v-card variant="flat">
                 <v-card-text>

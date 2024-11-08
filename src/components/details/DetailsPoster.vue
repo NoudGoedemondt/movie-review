@@ -5,8 +5,6 @@
       alt="Movie Poster"
       class="rounded"
       aspect-ratio="2/3"
-      width="260"
-      height="390"
     >
       <template v-slot:placeholder>
         <v-row class="fill-height" align="center" justify="center">
