@@ -1,6 +1,6 @@
 <template>
   <div @click="goToDetails">
-    <img :src="url" :alt="url" />
+    <img :src="url" :alt="url" class="rounded" />
   </div>
 </template>
 
